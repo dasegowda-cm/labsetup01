@@ -1,0 +1,49 @@
+pipeline {
+    agent { label 'Java' }
+    stages { 
+        stage ("Build with Ansible") {
+            steps {
+                sh "ansible-playbook Install-Dep.yml"
+            }
+        }
+        stage ("SCM Checkin-1") {
+            steps {
+                git branch: 'master', url: 'https://github.com/Vishwanathms/DaseGowdarepo'
+            }
+        }
+        stage ("maven build") {
+            tools {
+                maven 'maven-3.6.2'
+                jdk 'JDK1.8'
+            }
+            steps {
+                dir("samplemaven") {
+                    sh "mvn package"
+                }
+            }
+        }    
+        stage ('Build Image and run container') {
+	        input {
+                 message 'Mvn Package is Successfull, can I Proceed'
+            }
+            steps {
+            /* we would be executing the docker-compose in the working directory, 
+            bcz of the docker build issue as it can understand where is the war file. 
+            we will not be able to give the complete path as src to copy the war file */
+                sh "docker-compose up -d"
+            }
+        }
+        stage ('push it to docker hub') {
+            steps {
+                sh "docker push vishwacloudlab/tomcatcust01"
+            }
+        }
+        stage ('clean the image and the current folder') {
+            steps {
+                sh "docker-compose down"
+                sh "docker image rmi vishwacloudlab/tomcatcust01"
+                sh "rm -Rf *"
+            }
+        }
+    }
+}
