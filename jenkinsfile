@@ -29,7 +29,7 @@ pipeline {
             bcz of the docker build issue as it can understand where is the war file. 
             we will not be able to give the complete path as src to copy the war file */
                 sh "sudo docker build . -t vishwacloudlab/tomcatcustdase01"
-                sh "sudo docker run -d -p 80:8080 vishwacloudlab/tomcatcustdase01 -name cont1"
+                sh "sudo docker run -d -p 80:8080 -name cont1 vishwacloudlab/tomcatcustdase01 "
             }
         }
         stage ('push it to docker hub') {
