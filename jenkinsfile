@@ -17,9 +17,7 @@ pipeline {
                 jdk 'JDK1.8'
             }
             steps {
-                dir("samplemaven") {
-                    sh "mvn package"
-                }
+                sh "mvn package"
             }
         }    
         stage ('Build Image and run container') {
