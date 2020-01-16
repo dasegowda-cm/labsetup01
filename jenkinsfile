@@ -38,6 +38,9 @@ pipeline {
             }
         }
         stage ('clean the image and the current folder') {
+            input {
+                 message 'can I Proceed to delete the docker containers'
+            }
             steps {
                 sh "sudo docker rm cont1 -f"
                 sh "sudo docker image rmi dgowda2018/tomcatcust01"
