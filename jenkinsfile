@@ -25,8 +25,8 @@ pipeline {
                  message 'Mvn Package is Successfull, can I Proceed'
             }
             steps {
-            /* we would be executing the docker-compose in the working directory, 
-            bcz of the docker build issue as it can understand where is the war file. 
+            /* we would be executing the docker-compose in the working directory, */
+            /*bcz of the docker build issue as it can understand where is the war file. 
             we will not be able to give the complete path as src to copy the war file */
                 sh "sudo docker build . -t dgowda2018/tomcatcust01"
                 sh "sudo docker run -d -p 80:8080 --name cont1 dgowda2018/tomcatcust01"
