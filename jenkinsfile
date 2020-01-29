@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'G1' }
     stages { 
-        stage ("Build with Ansible") {
+        stage ("Install Docker, JDk, with Ansible") {
             steps {
                 sh "ansible-playbook Install-Dep.yml"
             }
