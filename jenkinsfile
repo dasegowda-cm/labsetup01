@@ -6,7 +6,7 @@ pipeline {
                 sh "ansible-playbook Install-Dep.yml"
             }
         }
-        stage ("SCM Checkin-1") {
+        stage ("SCM Checkin") {
             steps {
                 git branch: 'master', url: 'https://github.com/dasegowda-cm/labsetup01'
             }
